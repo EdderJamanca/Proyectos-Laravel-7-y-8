@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\InicioModel;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Cache\Store;
 class InicioController extends Controller
 {
     /**
@@ -14,62 +15,52 @@ class InicioController extends Controller
      */
     public function index()
     {
-        return view('modulos.inicio');
+        $datos=InicioModel::all();
+        return view('modulos.inicio')->with('datos',$datos);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\InicioModel  $inicioModel
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(InicioModel $inicioModel)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\InicioModel  $inicioModel
-     * @return \Illuminate\Http\Response
-     */
+   
     public function edit(InicioModel $inicioModel)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\InicioModel  $inicioModel
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, InicioModel $inicioModel)
+    public function update(Request $request, $id)
     {
-        //
+        $datos=request()->validate(['nombre'=>['required','string'],
+                                    'telefono'=>['required','string'],
+                                    'imagen'=>['required','image'],
+                                    'email'=>['required','email'],
+                                    'direccion'=>['required','string']]);
+     
+        if(request('imagen')){
+            Storage::delete('public/'.request('imagen-antigua'));
+            $rutaimg=$request['imagen']->store('/','public');
+        }
+     
+  
+        InicioModel::where('id',$id)->update(['logo'=>$rutaimg,'telefono'=>$datos['telefono'],
+                             'direccion'=>$datos['direccion'], 'email'=>$datos['email'], 'nombre'=>$datos['nombre']]);
+        $datos=InicioModel::all();
+        return view('modulos.inicio')->with('datos',$datos);
     }
 
     /**

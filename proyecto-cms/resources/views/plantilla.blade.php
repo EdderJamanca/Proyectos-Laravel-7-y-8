@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="{{url('/')}}/css/plugins/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {{-- ================================================
                     PLUGINS JS BOOTSTRAP
         ================================================= --}}
@@ -46,5 +47,6 @@
         @include('modulos.cabecera')
         @include('modulos.menu')
         @yield('content')
+        <script src="{{url('/')}}/js/script01.js"></script>
     </body>
 </html>

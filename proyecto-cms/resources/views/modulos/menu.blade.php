@@ -45,7 +45,7 @@
             ==================================== --}}
             <li class="nav-item">
 
-                <a href="{{url('/inicio')}}" class="nav-link">
+                <a href="{{url('slide')}}" class="nav-link">
                     <i class="nav-icon fas fa-image"></i> 
                     <p>Slide</p>
                 </a>
@@ -56,7 +56,7 @@
             ==================================== --}}
             <li class="nav-item">
 
-                <a href="{{url('/inicio')}}" class="nav-link">
+                <a href="{{url('categorias')}}" class="nav-link">
                     <i class=" nav-icon fas fa-list-ul"></i> 
                     <p>Categoría</p>
                 </a>
@@ -67,9 +67,9 @@
             ==================================== --}}
             <li class="nav-item">
 
-                <a href="{{url('/inicio')}}" class="nav-link">
+                <a href="{{url('/excursiones')}}" class="nav-link">
                     <i class="nav-icon fas fa-taxi"></i> 
-                    <p>Categoría</p>
+                    <p>Excursiones</p>
                 </a>
 
             </li>
@@ -78,7 +78,7 @@
             ==================================== --}}
             <li class="nav-item">
 
-                <a href="{{url('/inicio')}}" class="nav-link">
+                <a href="{{url('/mensaje')}}" class="nav-link">
                     <i class="nav-icon fas fa-envelope"></i> 
                     <p>Mensaje</p>
                 </a>

@@ -6,35 +6,18 @@
       <div id="slide" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         
         <ul>
-
-            <li>
-                <img src="images/slide/slide01.jpg">
-                <div class="slideCaption">
-                    <h3>Título 1</h3>
-                    <p>Descripción 1</p>
-                </div>
-            </li>
-
-
-            <li>
-                <img src="images/slide/slide02.jpg">
-                <div class="slideCaption">
-                    <h3>Título 2</h3>
-                    <p>Descripción 2</p>
-                </div>
-            </li>
+            @foreach($slide as $key)
+                <li>
+                    <img src="{{url('/')}}/storage/{{$key->img}}">
+                    <div class="slideCaption">
+                        <h3>{{$key->titulo}}</h3>
+                        <p>{{$key->descripcion}}</p>
+                    </div>
+                </li>
+            @endforeach
 
 
-            <li>
-                <img src="images/slide/slide03.jpg">
-                <div class="slideCaption">
-                    <h3>Título 3</h3>
-                    <p>Descripción 3</p>
-                </div>
-            </li>
-            
-       
-          
+        
         </ul>
 
 
@@ -50,45 +33,19 @@
     
     <h1 class="text-center text-info"><b>CATEGORÍAS</b></h1>
 
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
+        @foreach($categorias as $categoria)
 
-           <a href="#" style="color: black;">
-               
-                <h3>Viajes por Argentina</h3>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
 
-           </a> 
-
-        </div>
-
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
-
-           <a href="#" style="color: black;">
-               
-                <h3>Turismo en Colombia</h3>
-
-           </a> 
-
-        </div>
-
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
-
-           <a href="#" style="color: black;">
-               
-                <h3>Brasil</h3>
-
-           </a> 
-
-        </div>
-
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
-
-           <a href="#" style="color: black;">
-               
-                <h3>Perú</h3>
-
-           </a> 
-
-        </div>
+                <a href="#" style="color: black;">
+                    
+                    <h3>{{$categoria->nombre}}</h3>
+    
+                </a> 
+    
+            </div>
+ 
+        @endforeach
 
 </div>
 
@@ -102,32 +59,21 @@
     <hr>
 
     <ul>
+        @foreach($excursiones as $excursion)
 
-        <li class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <li class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-            <img src="images/articulos/landscape02.jpg" class="img-thumbnail">
-            <h1>Viaje por Mar del Plata</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <a href="#">
-            <button class="btn btn-default">Leer Más</button>
-            </a>
+                <img src="{{url('/')}}/storage/{{$excursion->img}}" class="img-thumbnail">
+                <h1>{{$excursion->titulo}}</h1>
+                <p>{{$excursion->descripcion}}</p>
+                
+                <a href="{{ url('/una_excurson/'.$excursion->id)}}" class="btn btn-default">Leer Más</a>
 
-            <hr>
+                <hr>
 
-        </li>
+            </li>
 
-         <li class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-
-            <img src="images/articulos/landscape03.jpg" class="img-thumbnail">
-            <h1>Colombia</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <a href="#">
-            <button class="btn btn-default">Leer Más</button>
-            </a>
-
-            <hr>
-
-        </li>
+        @endforeach
 
     </ul>
 
@@ -137,7 +83,7 @@
 
     <div class="row">
         
-        <center><a href="#"><button class="btn btn-primary btn-lg">Ver Todas las Excursiones</button></a></center>
+        <center><a href="{{url('todas_excursiones')}}"><button class="btn btn-primary btn-lg">Ver Todas las Excursiones</button></a></center>
         
     </div>
 
@@ -190,8 +136,9 @@
             </li>
         </ol>
 
-        <form method="post" novalidate>
-
+        <form action="{{url('guardar')}}" method="post" novalidate>
+                @csrf
+                @method('post')
                 <input type="text" name="nombre" class="form-control"  placeholder="Nombre">
 
                 <input type="email" name="email" class="form-control" placeholder="Email">

@@ -3,25 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\FrontendModel;
+use App\SlideModel;
+use App\CategoriaModel;
 use Illuminate\Http\Request;
-
+use App\ExcursionesModel;
+use App\mensajeModel;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 class FronentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        return view('frontend.inicio');
+
+        $slide=SlideModel::all();
+        $categoria=CategoriaModel::all();
+        $excursion=ExcursionesModel::all()->sortByDesc('id')->take(2);
+        return view('frontend.inicio')->with('slide',$slide)->with('categorias',$categoria)->with('excursiones',$excursion);
+    }
+    
+    public function Excursion()
+    {
+        $excursiones=ExcursionesModel::all();
+        return view('frontend.excursionTotal')->with('todosExcursion',$excursiones);
+    }
+    public function ExcursionUna($id){
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -35,7 +44,13 @@ class FronentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datos=request()->validate(['nombre'=>['required','string'],
+                                    'email'=>['required','email'],
+                                    'mensaje'=>['required','string']]);
+
+        mensajeModel::create(['nombre'=>$datos['nombre'],'email'=>$datos['email'],'mensaje'=>$datos['mensaje'],'estado'=>'no']);
+
+        return redirect('/');
     }
 
     /**
@@ -44,17 +59,15 @@ class FronentController extends Controller
      * @param  \App\FrontendModel  $frontendModel
      * @return \Illuminate\Http\Response
      */
-    public function show(FrontendModel $frontendModel)
+    public function show(FrontendModel $frontendModel,$id)
     {
-        //
+        $excursiones=ExcursionesModel::find($id);
+        $galeria=DB::select('select * from galeria where id_excursion="'.$id.'" order by id desc');
+    
+        return view('frontend.unaExcursion')->with('unaExcursion',$excursiones)->with('galeria',$galeria);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\FrontendModel  $frontendModel
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(FrontendModel $frontendModel)
     {
         //

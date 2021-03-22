@@ -29,7 +29,7 @@
     @yield('content')
 
     
-<script src="js/script.js"></script>
+<script src="{{url('/')}}/js/script.js"></script>
     
 </body>
 </html>
